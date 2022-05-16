@@ -1,0 +1,280 @@
+{
+	"objects": [{
+			"application": "Local|Web",
+			"name": "${BankingApplicationVersion}",
+			"kind": "ApplicationVersion"
+		},
+		{
+			"application": "Local|Reporting",
+			"name": "${BankingApplicationVersion}",
+			"kind": "ApplicationVersion"
+		},
+		{
+			"application": "Local|Mobile",
+			"name": "${BankingApplicationVersion}",
+			"kind": "ApplicationVersion"
+		},
+		{
+			"applicationVersion": "Local|Mobile/${BankingApplicationVersion}",
+			"name": "JIRA",
+			"kind": "ContentSource",
+			"plugin": "Jira/1.2.3",
+			"endpoint": "JIRA-Broadcom",
+			"parameters": {
+				"query": "project = SW-CDD-Training AND (reporter = mf672008 OR assignee = mf672008)"
+			},
+			"type": "JIRA JQL"
+		},
+		{
+			"applicationVersion": "Local|Reporting/${BankingApplicationVersion}",
+			"name": "Rally",
+			"kind": "ContentSource",
+			"plugin": "Rally Platform/2.5",
+			"endpoint": "Rally",
+			"parameters": {
+				"release": "FY19Q4-CDD Training",
+				"project": "CDD Training",
+				"iteration": "Sprint 1",
+				"additionalFilters": "",
+				"importFromChildProject": "false",
+				"type": "User Story",
+				"tags": "CDD-Training-Forhan"
+			},
+			"type": "Add Content"
+		},
+		{
+			"applicationVersion": "Local|Reporting/${BankingApplicationVersion}",
+			"commitRegularExpression": "^[ \\\\t]*([A-Za-z0-9_]+)",
+			"name": "v1.0_commitSource",
+			"kind": "CommitSource",
+			"plugin": "GitHub/1.0.2",
+			"endpoint": "Github",
+			"parameters": {
+				"owner": "mforhan",
+				"repository": "CDDTraining"
+			},
+			"type": "Get Commit Messages"
+		},
+		{
+			"ownerParties": ["michael.forhan@broadcom.com"],
+			"applicationVersions": ["Local|Web/${BankingApplicationVersion}", "Local|Reporting/${BankingApplicationVersion}", "Local|Mobile/${BankingApplicationVersion}"],
+			"runOnCreation": false,
+			"version": "${Banking.releaseVersion}",
+			"name": "${Banking.releaseName}",
+			"kind": "Release"
+		},
+		{
+			"release": "${Banking.releaseName}/${Banking.releaseVersion}",
+			"scope": "RELEASE_SCOPE",
+			"value": "1620508",
+			"name": "jira.broadcom.issue.id",
+			"kind": "ReleaseToken"
+		},
+		{
+			"release": "${Banking.releaseName}/${Banking.releaseVersion}",
+			"scope": "RELEASE_SCOPE",
+			"value": "SWCDDTRAIN-95",
+			"name": "jira.broadcom.issue.key",
+			"kind": "ReleaseToken"
+		},
+		{
+			"release": "${Banking.releaseName}/${Banking.releaseVersion}",
+			"scope": "RELEASE_SCOPE",
+			"value": "SWCDDTRAIN",
+			"name": "jira.broadcom.Project",
+			"kind": "ReleaseToken"
+		},
+		{
+			"release": "${Banking.releaseName}/${Banking.releaseVersion}",
+			"scope": "RELEASE_SCOPE",
+			"value": "http://jira.broadcom.com/rest/api/latest/issue/1620508",
+			"name": "jira.broadcom.self.link",
+			"kind": "ReleaseToken"
+		},
+		{
+			"approvalGate": "AUTOMATIC",
+			"release": "${Banking.releaseName}/${Banking.releaseVersion}",
+			"environments": ["UAT"],
+			"skipTasksWithUnchangedApplications": true,
+			"isApprovalRequired": false,
+			"name": "User Acceptance",
+			"kind": "Phase"
+		},
+		{
+			"approvalGate": "SCHEDULED",
+			"release": "${Banking.releaseName}/${Banking.releaseVersion}",
+			"plannedStartDate": "${Banking.SIT.dailyBuild.Start}",
+			"recurrence": {
+				"timeZoneId": "America/Chicago",
+				"recurrencePattern": "DAILY"
+			},
+			"plannedEndDate": "${Banking.SIT.dailyBuild.End}",
+			"previousPhase": "User Acceptance",
+			"environments": ["SIT"],
+			"skipTasksWithUnchangedApplications": false,
+			"isApprovalRequired": false,
+			"name": "System Integration Tests",
+			"kind": "Phase"
+		},
+		{
+			"approvalGate": "MANUAL",
+			"release": "${Banking.releaseName}/${Banking.releaseVersion}",
+			"previousPhase": "System Integration Tests",
+			"environments": ["Pre-Production"],
+			"skipTasksWithUnchangedApplications": false,
+			"isApprovalRequired": false,
+			"name": "Production Verification",
+			"kind": "Phase"
+		},
+		{
+			"approvalGate": "SCHEDULED",
+			"release": "${Banking.releaseName}/${Banking.releaseVersion}",
+			"plannedStartDate": "${Banking.Production.Release.Start}",
+			"plannedEndDate": "${Banking.Production.Release.End}",
+			"previousPhase": "Production Verification",
+			"environments": ["Production"],
+			"skipTasksWithUnchangedApplications": true,
+			"isApprovalRequired": false,
+			"name": "Production",
+			"kind": "Phase"
+		},
+		{
+			"phase": "${Banking.releaseName}/${Banking.releaseVersion}/User Acceptance",
+			"applicationVersions": ["Local|Web/${BankingApplicationVersion}", "Local|Reporting/${BankingApplicationVersion}", "Local|Mobile/${BankingApplicationVersion}"],
+			"isDisabled": false,
+			"name": "Manual Approval",
+			"kind": "Task"
+		},
+		{
+			"phase": "${Banking.releaseName}/${Banking.releaseVersion}/User Acceptance",
+			"applicationVersions": ["Local|Web/${BankingApplicationVersion}"],
+			"previousTasks": ["Manual Approval"],
+			"isDisabled": true,
+			"name": "Create JIRA Issue",
+			"kind": "Task",
+			"plugin": "Jira/1.2.3",
+			"endpoint": "JIRA-Broadcom",
+			"parameters": {
+				"issueType": "Story",
+				"summary": "Test for tokens, project=%jira.broadcom.Project%",
+				"projectKey": "SWCDDTRAIN",
+				"issueId": "%jira.broadcom.issue.id%",
+				"issueKey": "%jira.broadcom.issue.key%",
+				"advanced": "false",
+				"selfURI": "%jira.broadcom.self.link%"
+			},
+			"type": "Create JIRA Issue"
+		},
+		{
+			"phase": "${Banking.releaseName}/${Banking.releaseVersion}/User Acceptance",
+			"applicationVersions": ["Local|Reporting/${BankingApplicationVersion}"],
+			"previousTasks": ["Create JIRA Issue"],
+			"isDisabled": false,
+			"name": "Deploy Reporting",
+			"kind": "Task",
+			"plugin": "Ansible Tower/1.0.5",
+			"endpoint": "Ansible Tower",
+			"parameters": {
+				"buildOrChangeId": "%Reporting.last_successful_change%",
+				"templateName": "CDD-Training-03",
+				"templateParameters": ""
+			},
+			"type": "Run Job template"
+		},
+		{
+			"phase": "${Banking.releaseName}/${Banking.releaseVersion}/User Acceptance",
+			"applicationVersions": ["Local|Web/${BankingApplicationVersion}"],
+			"previousTasks": ["Deploy Reporting"],
+			"isDisabled": false,
+			"name": "Deploy Web",
+			"kind": "Task",
+			"plugin": "Ansible Tower/1.0.5",
+			"endpoint": "Ansible Tower",
+			"parameters": {
+				"buildOrChangeId": "%Web.last_successful_change%",
+				"templateName": "CDD-Training-03"
+			},
+			"type": "Run Job template"
+		},
+		{
+			"phase": "${Banking.releaseName}/${Banking.releaseVersion}/User Acceptance",
+			"applicationVersions": ["Local|Web/${BankingApplicationVersion}", "Local|Reporting/${BankingApplicationVersion}", "Local|Mobile/${BankingApplicationVersion}"],
+			"previousTasks": ["Deploy Web"],
+			"isDisabled": false,
+			"name": "Manual Test",
+			"kind": "Task"
+		},
+		{
+			"phase": "${Banking.releaseName}/${Banking.releaseVersion}/System Integration Tests",
+			"applicationVersions": ["Local|Web/${BankingApplicationVersion}", "Local|Reporting/${BankingApplicationVersion}", "Local|Mobile/${BankingApplicationVersion}"],
+			"isDisabled": false,
+			"name": "Manual Approval",
+			"kind": "Task"
+		},
+		{
+			"phase": "${Banking.releaseName}/${Banking.releaseVersion}/System Integration Tests",
+			"previousTasks": ["Manual Approval"],
+			"isDisabled": true,
+			"name": "Add JIRA Issue Comment",
+			"kind": "Task",
+			"plugin": "Jira/1.2.3",
+			"endpoint": "JIRA-Broadcom",
+			"parameters": {
+				"issueId": "%jira.broadcom.issue.key%",
+				"comment": "ID=%jira.broadcom.issue.id% and SelfLink=%jira.broadcom.self.link%"
+			},
+			"type": "Add JIRA Issue Comment"
+		},
+		{
+			"phase": "${Banking.releaseName}/${Banking.releaseVersion}/System Integration Tests",
+			"applicationVersions": ["Local|Reporting/${BankingApplicationVersion}"],
+			"previousTasks": ["Add JIRA Issue Comment"],
+			"isDisabled": false,
+			"name": "Deploy Reporting",
+			"kind": "Task",
+			"plugin": "Ansible Tower/1.0.5",
+			"endpoint": "Ansible Tower",
+			"parameters": {
+				"buildOrChangeId": "%Reporting.last_successful_change%",
+				"templateName": "CDD-Training-03",
+				"templateParameters": ""
+			},
+			"type": "Run Job template"
+		},
+		{
+			"phase": "${Banking.releaseName}/${Banking.releaseVersion}/System Integration Tests",
+			"applicationVersions": ["Local|Web/${BankingApplicationVersion}"],
+			"previousTasks": ["Deploy Reporting"],
+			"isDisabled": false,
+			"name": "Deploy Web",
+			"kind": "Task",
+			"plugin": "Ansible Tower/1.0.5",
+			"endpoint": "Ansible Tower",
+			"parameters": {
+				"buildOrChangeId": "%Web.last_successful_change%",
+				"templateName": "CDD-Training-03"
+			},
+			"type": "Run Job template"
+		},
+		{
+			"phase": "${Banking.releaseName}/${Banking.releaseVersion}/System Integration Tests",
+			"applicationVersions": ["Local|Web/${BankingApplicationVersion}", "Local|Reporting/${BankingApplicationVersion}", "Local|Mobile/${BankingApplicationVersion}"],
+			"previousTasks": ["Deploy Web"],
+			"isDisabled": false,
+			"name": "Manual Test",
+			"kind": "Task"
+		},
+		{
+			"phase": "${Banking.releaseName}/${Banking.releaseVersion}/Production Verification",
+			"isDisabled": false,
+			"name": "Manual Approval",
+			"kind": "Task"
+		},
+		{
+			"phase": "${Banking.releaseName}/${Banking.releaseVersion}/Production",
+			"isDisabled": false,
+			"name": "Manual Approval",
+			"kind": "Task"
+		}
+	]
+}

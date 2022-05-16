@@ -1,0 +1,37 @@
+{
+"parameters": [
+ {
+  "name": "BankingApplicationVersion",
+  "value": "v1.0"
+ },
+ { 
+  "name": "Banking.releaseName",
+  "value": "Online-Banking-FY19"
+ },
+ {
+  "name": "Banking.releaseVersion",
+  "value": "Q4S1"
+ },
+ {
+  "name": "Banking.SIT.dailyBuild.Start",
+  "value": "05/07/2019 01:00:00 -04"
+ },
+ {
+  "name": "Banking.SIT.dailyBuild.End",
+  "value": "05/07/2019 01:01:00 -04"
+ },
+ {
+  "name": "Banking.Production.Release.Start",
+  "value": "18/07/2019 01:00:31 -04"
+ },
+ {
+  "name": "Banking.Production.Release.End",
+  "value": "19/07/2019 05:00:31 -04"
+ }
+],
+"reference": {
+  "fileName": "Online-Banking-FY19.json",
+  "fileSource": "GitHub-CDDTraining"
+ } 
+ 
+}

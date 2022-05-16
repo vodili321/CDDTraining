@@ -1,0 +1,584 @@
+{
+ "objects":[
+ {
+   "application":"CDA|DigitalBankingAppPayment",
+   "name":"${BankingApplicationVersion}",
+   "kind":"ApplicationVersion"
+ },
+ {
+   "application":"CDA|tixrec",
+   "name":"${BankingApplicationVersion}",
+   "kind":"ApplicationVersion"
+ },
+ {
+   "application":"CDA|DigitalBankingApp",
+   "name": "${BankingApplicationVersion}",
+   "kind":"ApplicationVersion"
+ },
+ {
+   "applicationVersion":"CDA|DigitalBankingAppPayment/${BankingApplicationVersion}",
+   "name":"Digital Banking APP",
+   "kind":"ContentSource",
+   "plugin":"Rally Platform/2.5",
+   "endpoint":"ClarityRally",
+   "parameters":{
+     "project":"Team Everest",
+	 "importFromChildProject":"false",
+	 "type":"User Story"
+    },
+	"type":"Add Content"
+ },
+ {
+   "applicationVersion":"CDA|${Banking.releaseName}/${BankingApplicationVersion}",
+   "name":"Digital Banking (copy)",
+   "kind":"ContentSource",
+   "plugin":"Rally Platform/2.5",
+   "endpoint":"ClarityRally",
+   "parameters":{
+     "project":"Team Denali",
+	 "importFromChildProject":"false",
+	 "type":"User Story"
+    },
+	"type":"Add Content"
+ },
+ {
+   "applicationVersion":"CDA|tixrec/${BankingApplicationVersion}",
+   "name":"tixRec",
+   "kind":"ContentSource",
+   "plugin":"Rally Platform/2.5",
+   "endpoint":"ClarityRally",
+   "parameters":{
+     "project":"Team Everest",
+	 "importFromChildProject":"false",
+	 "type":"User Story"
+	},
+	"type":"Add Content"
+ },
+ {
+   "applicationVersion":"CDA|tixrec/${BankingApplicationVersion}",
+   "commitRegularExpression":"^[ \\\\t]*([A-Za-z0-9_]+)",
+   "name":"1_commitSource (copy)",
+   "kind":"CommitSource",
+   "plugin":"GitHub/1.0.2",
+   "endpoint":"Github",
+   "parameters":{
+     "owner":"AutomicDemo",
+	 "repository":"TixRec"
+	},
+	"type":"Get Commit Messages"
+ },
+ {
+   "applicationVersion":"CDA|${Banking.releaseName}/${BankingApplicationVersion}",
+   "commitRegularExpression":"^[ \\\\t]*([A-Za-z0-9_]+)",
+   "name":"2_commitSource",
+   "kind":"CommitSource",
+   "plugin":"GitHub/1.0.2",
+   "endpoint":"Github",
+   "parameters":{
+     "owner":"AutomicDemo",
+	 "repository":"DigitalBankingApp"
+	},
+	"type":"Get Commit Messages"
+ },
+ {
+   "applicationVersion":"CDA|DigitalBankingAppPayment/${BankingApplicationVersion}",
+   "commitRegularExpression":"^[ \\\\t]*([A-Za-z0-9_]+)",
+   "name":"2_commitSource",
+   "kind":"CommitSource",
+   "plugin":"GitHub/1.0.2",
+   "endpoint":"Github",
+   "parameters":{
+     "owner":"AutomicDemo",
+	 "repository":"TixRec"
+	},
+	"type":"Get Commit Messages"
+ },
+ {
+   "applicationVersions":[
+    "CDA|tixrec/${BankingApplicationVersion}",
+	"CDA|${Banking.releaseName}/${BankingApplicationVersion}",
+	"CDA|DigitalBankingAppPayment/${BankingApplicationVersion}"
+   ],
+   "ownerParties":[
+    "superuser@ca.com"
+   ],
+   "markAsDonePhaseName":"",
+   "runOnCreation":false,
+   
+   "version":"${Banking.releaseVersion}",
+   "name":"${Banking.releaseName}",
+   "kind":"Release"
+ },
+ {
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"US290",
+   "scope":"RELEASE_SCOPE",
+   "name":"UserStories",
+   "kind":"ReleaseToken"
+ },
+ {
+   "releaseTokenTemplate":"deploymenttype",
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"STANDARD",
+   "scope":"RELEASE_SCOPE",
+   "kind":"ReleaseToken"
+ },
+ {
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"approval",
+   "scope":"RELEASE_SCOPE",
+   "name":"snow_statusfield",
+   "kind":"ReleaseToken"
+ },
+ {
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"15",
+   "scope":"RELEASE_SCOPE",
+   "name":"snow_pollinterval",
+   "kind":"ReleaseToken"
+ },
+ {
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"approved",
+   "scope":"RELEASE_SCOPE",
+   "name":"snow_check_status",
+   "kind":"ReleaseToken"
+ },
+ {
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"Payment Services V2 Q2",
+   "scope":"RELEASE_SCOPE",
+   "name":"snow_Appdesc",
+   "kind":"ReleaseToken"
+ },
+ { 
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"CHG0037721",
+   "scope":"RELEASE_SCOPE",
+   "name":"SnowChgID",
+   "kind":"ReleaseToken"
+ },
+ {
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"payment",
+   "scope":"RELEASE_SCOPE",
+   "name":"release_app",
+   "kind":"ReleaseToken"
+ },
+ {
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"Phase finished for DigitalBankingAppPayment and DigitalBankingApp",
+   "scope":"RELEASE_SCOPE",
+   "name":"PhaseStatus-Test",
+   "kind":"ReleaseToken"
+ },
+ {
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"Applications Deployed to Production system",
+   "scope":"RELEASE_SCOPE",
+   "name":"PhaseStatus-Prod",
+   "kind":"ReleaseToken"
+ },
+ {
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"LOB users satisfied with new business capability",
+   "scope":"RELEASE_SCOPE",
+   "name":"PhaseStatus-Post-Prod",
+   "kind":"ReleaseToken"
+ },
+ {
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"Phase finished for DigitalBankingAppPayment and DigitalBankingApp",
+   "scope":"PHASE_SCOPE",
+   "name":"PhaseStatus-Dev",
+   "kind":"ReleaseToken"
+ },
+ {
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"226",
+   "scope":"RELEASE_SCOPE",
+   "name":"jenkins_build_tixrec",
+   "kind":"ReleaseToken"
+ },
+ {
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"",
+   "scope":"PHASE_SCOPE",
+   "name":"jenkins_build_tixchange",
+   "kind":"ReleaseToken"
+ },
+ {
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "value":"ARA",
+   "scope":"RELEASE_SCOPE",
+   "name":"distinct_zone",
+   "kind":"ReleaseToken"
+ },
+ {
+   "approvalGate":"AUTOMATIC",
+   "environments":["Dev_Payment"],
+   "skipTasksWithUnchangedApplications":true,
+   
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "isApprovalRequired":false,
+   "name":"Dev",
+   "kind":"Phase"
+ },
+ {
+   "approvalGate":"AUTOMATIC",
+   "environments":["NONPROD_TEST"],
+   "previousPhase":"Dev",
+   "skipTasksWithUnchangedApplications":true,
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "isApprovalRequired":false,
+   "name":"NonProd(Test)",
+   "kind":"Phase"
+ },
+ {
+   "approvalGate":"AUTOMATIC",
+   "environments":["NONPROD_TEST",
+   "PROD"],
+   "previousPhase":"NonProd(Test)",
+   "skipTasksWithUnchangedApplications":true,
+   
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "isApprovalRequired":false,
+   "name":"UAT",
+   "kind":"Phase"
+ },
+ {
+   "approvalGate":"SCHEDULED",
+   "environments":["PROD"],
+   "plannedStartDate":"31/03/2020 23:00:37 Z",
+   "plannedEndDate":"01/04/2020 00:00:37 Z",
+   "previousPhase":"UAT",
+   "skipTasksWithUnchangedApplications":true,
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "isApprovalRequired":false,
+   "name":"Prod",
+   "kind":"Phase"
+ },
+ {
+   "approvalGate":"MANUAL",
+   "environments":["PROD"],
+   "previousPhase":"Prod",
+   "skipTasksWithUnchangedApplications":false,
+   "release":"${Banking.releaseName}/${Banking.releaseVersion}",
+   "isApprovalRequired":false,
+   "name":"Post Prod",
+   "kind":"Phase"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Dev",
+   "applicationVersions":["CDA|${Banking.releaseName}/${BankingApplicationVersion}",
+   "CDA|DigitalBankingAppPayment/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "description":"<p>This task will dynamically use Terraform template integration to create our target in GCP.</p><p>Passing the correct runtime variables as dynamic properties</p><p><br /></p><p>{&#34;workflow&#34;: {&#34;/triggerparameters/deploymenttype&#34;: &#34;STANDARD&#34;, &#34;/triggerparameters/release_app&#34;:&#34;payment&#34;,&#34;/triggerparameters/distinct_zone&#34;:&#34;ARA&#34;,&#34;/triggerparameters/deprovision_timeout&#34;:&#34;380&#34;} }</p>",
+   "name":"Prov. DEV DigitalBanking Infra.",
+   "kind":"Task",
+   "plugin":"CDA/2.0.0",
+   "endpoint":"CDA",
+   "parameters":{"workflow":"PaymentInfrastructure",
+   "dynamic_property":"workflow/triggerparameters/phase",
+   "dynamic_property_value":"DEV",
+   "additional_dynamic_properties":"{\"workflow\": {\"/triggerparameters/deploymenttype\": \"%ReleaseToken/deploymenttype%\", \"/triggerparameters/release_app\":\"%release_app%\",\"/triggerparameters/distinct_zone\":\"%distinct_zone%\",\"/triggerparameters/deprovision_timeout\":\"300\", \"/triggerparameters/release\":\"%DigitalBankingAppPayment.last_successful_change%\"}}",
+   "compensation_parameters":"false"},"type":"Start General Workflow"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Dev",
+   "applicationVersions":["CDA|DigitalBankingAppPayment/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "previousTasks":["Prov. DEV DigitalBanking Infra."],
+   "name":"Deploy DigitalBankingAppPayment",
+   "kind":"Task",
+   "plugin":"CDA/2.0.0",
+   "endpoint":"CDA",
+   "parameters":{"package":"%DigitalBankingAppPayment.last_successful_change%",
+   "application":"DigitalBankingAppPayment",
+   "workflow":"Deploy",
+   "deployment_profile":"DeployToDEV_%distinct_zone%_%DigitalBankingAppPayment.last_successful_change%",
+   "install_mode":"Overwrite Existing",
+   "compensation_parameters":"false"},"type":"Start Application Workflow"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Dev",
+   "applicationVersions":["CDA|${Banking.releaseName}/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "previousTasks":["Deploy DigitalBankingAppPayment"],
+   "name":"Deploy DigitalBankingApp",
+   "kind":"Task",
+   "plugin":"CDA/2.0.0",
+   "endpoint":"CDA",
+   "parameters":{"package":"%DigitalBankingApp.last_successful_change%",
+   "application":"DigitalBankingApp",
+   "workflow":"Deploy",
+   "deployment_profile":"DeployToDEV_%distinct_zone%_%DigitalBankingAppPayment.last_successful_change%",
+   "install_mode":"Overwrite Existing",
+   "dynamic_property_value":"",
+   "additional_dynamic_properties":"",
+   "compensation_parameters":"false"},"type":"Start Application Workflow"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Dev",
+   "applicationVersions":["CDA|tixrec/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "tags":["gradle"],
+   "previousTasks":["Deploy DigitalBankingApp"],
+   "name":"CDI Test - DigitalBankingAppPayment",
+   "kind":"Task",
+   "plugin":"ADAPTIVE TESTING/1.1.1",
+   "parameters":{"changeId":"%tixrec.last_successful_change%",
+   "runOnlySubset":"true"},"type":"Run Adaptive Testing"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Dev",
+   "applicationVersions":["CDA|DigitalBankingAppPayment/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "previousTasks":["CDI Test - DigitalBankingAppPayment"],
+   "name":"Notify Dev Teams of Status",
+   "kind":"Task",
+   "plugin":"Flowdock/1.0.2",
+   "endpoint":"Flowdock",
+   "parameters":{"message":"%PhaseStatus-Dev%"},"type":"Post Message"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/NonProd(Test)",
+   "applicationVersions":["CDA|DigitalBankingAppPayment/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "name":"Prov. NONPROD DigitalBanking Infra.",
+   "kind":"Task",
+   "plugin":"CDA/2.0.0",
+   "endpoint":"CDA",
+   "parameters":{"workflow":"PaymentInfrastructure",
+   "dynamic_property":"workflow/triggerparameters/phase",
+   "dynamic_property_value":"NONPROD-TEST",
+   "additional_dynamic_properties":"{\"workflow\": {\"/triggerparameters/deploymenttype\": \"%ReleaseToken/deploymenttype%\", \"/triggerparameters/release_app\":\"%release_app%\",\"/triggerparameters/distinct_zone\":\"%distinct_zone%\",\"/triggerparameters/deprovision_timeout\":\"300\", \"/triggerparameters/release\":\"%jenkins_build_tixrec%\"} }",
+   "compensation_parameters":"false"},"type":"Start General Workflow"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/NonProd(Test)",
+   "applicationVersions":["CDA|DigitalBankingAppPayment/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "previousTasks":["Prov. NONPROD DigitalBanking Infra."],
+   "name":"Deploy DigitalBankingAppPayment",
+   "kind":"Task",
+   "plugin":"CDA/2.0.0",
+   "endpoint":"CDA",
+   "parameters":{"package":"%DigitalBankingAppPayment.last_successful_change%",
+   "application":"DigitalBankingAppPayment",
+   "workflow":"Deploy",
+   "deployment_profile":"DeployToNONPROD-TEST_%distinct_zone%_%jenkins_build_tixrec%",
+   "install_mode":"Overwrite Existing",
+   "compensation_parameters":"false"},"type":"Start Application Workflow"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/NonProd(Test)",
+   "applicationVersions":["CDA|${Banking.releaseName}/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "previousTasks":["Deploy DigitalBankingAppPayment"],
+   "name":"Deploy DigitalBankingApp",
+   "kind":"Task",
+   "plugin":"CDA/2.0.0",
+   "endpoint":"CDA",
+   "parameters":{"package":"%DigitalBankingApp.last_successful_change%",
+   "application":"DigitalBankingApp",
+   "workflow":"Deploy",
+   "deployment_profile":"DeployToNONPROD-TEST_%distinct_zone%_%DigitalBankingAppPayment.last_successful_change%",
+   "install_mode":"Overwrite Existing",
+   "compensation_parameters":"false"},"type":"Start Application Workflow"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/NonProd(Test)",
+   "applicationVersions":["CDA|tixrec/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "tags":["gradle"],
+   "previousTasks":["Deploy DigitalBankingApp"],
+   "name":"CDI Test - DigitalBankingAppPayment",
+   "kind":"Task",
+   "plugin":"ADAPTIVE TESTING/1.1.1",
+   "parameters":{"changeId":"%jenkins_build_tixrec%",
+   "runOnlySubset":"false"},"type":"Run Adaptive Testing"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/NonProd(Test)",
+   "applicationVersions":["CDA|DigitalBankingAppPayment/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "previousTasks":["CDI Test - DigitalBankingAppPayment"],
+   "name":"Notify Test Teams of Status",
+   "kind":"Task",
+   "plugin":"Flowdock/1.0.2",
+   "endpoint":"Flowdock",
+   "parameters":{"message":"%PhaseStatus-Test%"},"type":"Post Message"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/UAT",
+   "applicationVersions":["CDA|${Banking.releaseName}/${BankingApplicationVersion}",
+   "CDA|DigitalBankingAppPayment/${BankingApplicationVersion}"],
+   "isDisabled":true,
+   "name":"Notify Teams of Status",
+   "kind":"Task",
+   "plugin":"Flowdock/1.0.2",
+   "endpoint":"Flowdock",
+   "parameters":{"message":"%PhaseStatus-Test%"},"type":"Post Message"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/UAT",
+   "applicationVersions":["CDA|${Banking.releaseName}/${BankingApplicationVersion}",
+   "CDA|DigitalBankingAppPayment/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "previousTasks":["Notify Teams of Status"],
+   "description":"<p><strong>​</strong><a style=\"color: rgb(60, 110, 122);\"><strong>https://ven01747.service-now.com</strong></a></p>",
+   "name":"Create Change Request For Production",
+   "kind":"Task",
+   "plugin":"ServiceNow/2.2",
+   "endpoint":"ServiceNow",
+   "parameters":{"changeRequestId":"%SnowChgID%",
+   "shortDescription":"%snow_Appdesc%"},"type":"Create Change Request"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/UAT",
+   "applicationVersions":["CDA|${Banking.releaseName}/${BankingApplicationVersion}",
+   "CDA|DigitalBankingAppPayment/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "previousTasks":["Create Change Request For Production"],
+   "name":"E-mail Change Information",
+   "kind":"Task",
+   "plugin":"Email/1.1",
+   "endpoint":"awsapps e-mail server",
+   "parameters":{"subject":"%SnowChgID%: DigitalBankingApp Awaiting Approval for Production Deployment",
+   "to":"cdd.demo@localdemo.com",
+   "body":"Please review the following Change Request to promote the latest DigitalBankingApp code to production:\nhttps://ven01747.service-now.com/nav_to.do?uri=change_request.do?sys_id=%SnowChgID%"},"type":"Send Email"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Prod",
+   "isDisabled":false,
+   "description":"<p><strong>​</strong><a href=\"https://ven01747.service-now.com/\" style=\"color: rgb(60, 110, 122);\" rel=\"nofollow\"><strong>https://ven01747.service-now.com</strong></a></p>",
+   "name":"Wait for Change Approval",
+   "kind":"Task",
+   "plugin":"ServiceNow/2.2",
+   "endpoint":"ServiceNow",
+   "parameters":{"changeRequestId":"%SnowChgID%",
+   "pollInterval":"%snow_pollinterval%",
+   "statusField":"%snow_statusfield%",
+   "requiredStatus":"%snow_check_status%",
+   "ticketType":"Change Request"},"type":"Wait For Approval"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Prod",
+   "isDisabled":false,
+   "previousTasks":["Wait for Change Approval"],
+   "name":"Production Monitoring Disabled",
+   "kind":"Task"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Prod",
+   "applicationVersions":["CDA|${Banking.releaseName}/${BankingApplicationVersion}",
+   "CDA|DigitalBankingAppPayment/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "previousTasks":["Production Monitoring Disabled"],
+   "name":"Prov. PROD DigitalBanking Infrastructure",
+   "kind":"Task",
+   "plugin":"CDA/2.0.0",
+   "endpoint":"CDA",
+   "parameters":{"workflow":"PaymentInfrastructure",
+   "dynamic_property":"workflow/triggerparameters/phase",
+   "dynamic_property_value":"PROD",
+   "additional_dynamic_properties":"{\"workflow\": {\"/triggerparameters/deploymenttype\": \"%ReleaseToken/deploymenttype%\", \"/triggerparameters/release_app\":\"%release_app%\",\"/triggerparameters/distinct_zone\":\"%distinct_zone%\",\"/triggerparameters/deprovision_timeout\":\"300\", \"/triggerparameters/release\":\"%jenkins_build_tixrec%\"} }",
+   "compensation_parameters":"false"},"type":"Start General Workflow"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Prod",
+   "applicationVersions":["CDA|DigitalBankingAppPayment/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "previousTasks":["Prov. PROD DigitalBanking Infrastructure"],
+   "name":"Deploy DigitalBankingAppPayment",
+   "kind":"Task",
+   "plugin":"CDA/2.0.0",
+   "endpoint":"CDA",
+   "parameters":{"package":"%DigitalBankingAppPayment.last_successful_change%",
+   "application":"DigitalBankingAppPayment",
+   "workflow":"Deploy",
+   "deployment_profile":"DeployToPROD_%distinct_zone%_%DigitalBankingAppPayment.last_successful_change%",
+   "install_mode":"Overwrite Existing",
+   "compensation_parameters":"false"},"type":"Start Application Workflow"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Prod",
+   "applicationVersions":["CDA|${Banking.releaseName}/${BankingApplicationVersion}"],
+   "isDisabled":false,
+   "previousTasks":["Deploy DigitalBankingAppPayment"],
+   "name":"Deploy DigitalBankingApp",
+   "kind":"Task",
+   "plugin":"CDA/2.0.0",
+   "endpoint":"CDA",
+   "parameters":{"package":"%DigitalBankingApp.last_successful_change%",
+   "application":"DigitalBankingApp",
+   "workflow":"Deploy",
+   "deployment_profile":"DeployToPROD_%distinct_zone%_%DigitalBankingAppPayment.last_successful_change%",
+   "install_mode":"Overwrite Existing",
+   "compensation_parameters":"false"},"type":"Start Application Workflow"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Prod",
+   "isDisabled":false,
+   "previousTasks":["Deploy DigitalBankingApp"],
+   "name":"Notify Ops Teams of Status",
+   "kind":"Task",
+   "plugin":"Flowdock/1.0.2",
+   "endpoint":"Flowdock",
+   "parameters":{"message":"%PhaseStatus-Prod%"},"type":"Post Message"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Prod",
+   "isDisabled":false,
+   "previousTasks":["Deploy DigitalBankingApp"],
+   "name":"Production Monitoring Enabled",
+   "kind":"Task"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Post Prod",
+   "isDisabled":false,
+   "name":"DigitalBankingApp - update rally stories to released",
+   "kind":"Task"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Post Prod",
+   "isDisabled":false,
+   "previousTasks":["DigitalBankingApp - update rally stories to released"],
+   "name":"DigitalBankingAppPayment - update rally stories to released",
+   "kind":"Task"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Post Prod",
+   "isDisabled":false,
+   "previousTasks":["DigitalBankingAppPayment - update rally stories to released"],
+   "name":"Notify Release Owners",
+   "kind":"Task",
+   "plugin":"Flowdock/1.0.2",
+   "endpoint":"Flowdock",
+   "parameters":{"message":"%PhaseStatus-Post-Prod%"},"type":"Post Message"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Post Prod",
+   "isDisabled":false,
+   "previousTasks":["Notify Release Owners"],
+   "description":"<p><a href=\"http://www.cnn.com\" rel=\"nofollow\">http://www.cnn.com</a></p>",
+   "name":"Update DigitalBankingApp User Story to Released",
+   "kind":"Task",
+   "plugin":"Rally Platform/2.5",
+   "endpoint":"Rally",
+   "parameters":{"content_item_type":"User Story",
+   "project_name":"Team Denali",
+   "user_story_schedule_state":"Released",
+   "user_story_id":"US291"},"type":"Rally Update"
+ },
+ {
+   "phase":"${Banking.releaseName}/${Banking.releaseVersion}/Post Prod",
+   "isDisabled":false,
+   "previousTasks":["Update DigitalBankingApp User Story to Released"],
+   "description":"<p><a href=\"http://www.cnn.com\" rel=\"nofollow\">http://www.cnn.com</a></p>",
+   "name":"display report output",
+   "kind":"Task"
+ }
+ ]
+}
